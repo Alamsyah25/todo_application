@@ -34,7 +34,6 @@ class CreateTodoRepository {
           'task_name': task.taskName,
           'description': task.description,
           'due_date': task.dueDate,
-          'status_id': task.statusId
         },
       ).match(
         {'id': task.id},

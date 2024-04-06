@@ -26,13 +26,13 @@ class _CreateTodoViewState extends State<CreateTodoView> {
   final descriptionController = TextEditingController();
   final dateController = TextEditingController();
 
-  Future<void> _onSubmit(BuildContext context) async {
+  Future<void> _onSubmit(BuildContext context, String id) async {
     Task? data;
 
-    if (widget.task != null) {
+    if (widget.task == null) {
       data = await context.read<CreateTodoViewModel>().createTask();
     } else {
-      data = await context.read<CreateTodoViewModel>().updateTask();
+      data = await context.read<CreateTodoViewModel>().updateTask(id);
     }
 
     if (data != null) {
@@ -49,6 +49,22 @@ class _CreateTodoViewState extends State<CreateTodoView> {
         );
         Navigator.pop(context);
       });
+    } else {
+      Future.delayed(
+        const Duration(milliseconds: 500),
+        () {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                'Failed',
+                style: TextStyleTheme.current.bodyText2Heavy
+                    .copyWith(color: kNeutral0),
+              ),
+              backgroundColor: kError,
+            ),
+          );
+        },
+      );
     }
   }
 
@@ -174,7 +190,7 @@ class _CreateTodoViewState extends State<CreateTodoView> {
                             if (isLoading) return;
 
                             if (_formKey.currentState!.validate()) {
-                              _onSubmit(context);
+                              _onSubmit(context, widget.task?.id ?? '');
                             }
                           },
                           child: Builder(builder: (context) {

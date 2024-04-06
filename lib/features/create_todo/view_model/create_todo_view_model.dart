@@ -69,14 +69,14 @@ class CreateTodoViewModel extends BaseViewModel {
     return response;
   }
 
-  Future<Task?> updateTask() async {
+  Future<Task?> updateTask(String id) async {
     showLoading();
 
     final data = Task(
+      id: id,
       taskName: title,
       description: description,
       dueDate: date,
-      statusId: statusId,
     );
 
     final response = await _createTodoRepository.updateTask(data);
