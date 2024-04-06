@@ -1,36 +1,62 @@
+import 'dart:async';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:todo_application/common/style/text_style.dart';
-import 'package:todo_application/common/style/theme_app_style.dart';
-import 'package:todo_application/core/router/route_list.dart';
-import 'package:todo_application/core/router/routes.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+
+import 'common/constants/string.dart';
+import 'common/style/text_style.dart';
+import 'common/style/theme_app_style.dart';
+import 'core/router/route_list.dart';
+import 'core/router/routes.dart';
+import 'core/utils/logger.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  await runZonedGuarded(() async {
+    /// Init
+    final WidgetsBinding widgetsBinding =
+        WidgetsFlutterBinding.ensureInitialized();
 
-  /// init
-  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+    FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
-  await ScreenUtil.ensureScreenSize();
-  runApp(const TodoApp());
+    await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
+    await ScreenUtil.ensureScreenSize();
+
+    await Supabase.initialize(
+      url: Constants.supabaseUrl,
+      anonKey: Constants.supabaseAnnonKey,
+    );
+
+    runApp(const TodoApp());
+  }, (error, stack) {
+    if (kDebugMode) {
+      logger.w('run zoned guarded', error: error, stackTrace: stack);
+    }
+  });
 }
 
 class TodoApp extends StatelessWidget {
   const TodoApp({super.key});
+
   static final GlobalKey<NavigatorState> navigatorKey =
       GlobalKey<NavigatorState>();
-  // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
+    FlutterNativeSplash.remove();
     return ScreenUtilInit(
-        designSize: const Size(360, 640),
-        builder: (_, child) {
-          TextStyleTheme.init();
-          return LayoutBuilder(builder: (context, constraints) {
+      designSize: const Size(360, 640),
+      builder: (_, child) {
+        TextStyleTheme.init();
+        return LayoutBuilder(
+          builder: (context, constraints) {
             return MaterialApp(
               debugShowCheckedModeBanner: false,
-              title: "Pandawa",
+              title: 'Toolis',
               theme: themeApp,
               initialRoute: RouteList.main,
               routes: Routes().allRoutes,
@@ -40,7 +66,9 @@ class TodoApp extends StatelessWidget {
                 return child ?? const SizedBox.shrink();
               },
             );
-          });
-        });
+          },
+        );
+      },
+    );
   }
 }

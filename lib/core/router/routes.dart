@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_application/core/router/route_list.dart';
-import 'package:todo_application/feature/example/example_view.dart';
-import 'package:todo_application/feature/home/home_view.dart';
-import 'package:todo_application/feature/main/main_view.dart';
+
+import '../../features/create_todo/create_todo_view.dart';
+import '../../features/home/home_view.dart';
+import '../../features/main/main_view.dart';
+import '../model/task_model.dart';
+import 'route_list.dart';
 
 class Routes {
   static final Map<String, WidgetBuilder> _routes = {
     RouteList.main: (BuildContext context) => const MainView(),
     RouteList.home: (BuildContext context) => const HomeView(),
-    RouteList.example: (BuildContext context) => const ExampleView(),
   };
 
   Map<String, WidgetBuilder> get allRoutes => _routes;
@@ -33,12 +34,17 @@ class Routes {
           fullScreenDialog: false,
         );
 
-      case RouteList.example:
-        return _buildRoute(
-          settings: settings,
-          builder: const ExampleView(),
-          fullScreenDialog: false,
-        );
+      case RouteList.createTodo:
+        if (settings.arguments is Task?) {
+          final param = settings.arguments as Task?;
+          return _buildRoute(
+            settings: settings,
+            builder: CreateTodoView(
+              task: param,
+            ),
+          );
+        }
+        return _errorRoute();
 
       default:
         return MaterialPageRoute(

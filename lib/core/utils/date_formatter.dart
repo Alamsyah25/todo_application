@@ -1,6 +1,6 @@
 import 'package:intl/intl.dart';
 
-class DateFormatWasser {
+class DateFormatted {
   static const datePattern = 'dd/MM/yyyy';
 
   static String format(DateTime dateTime) {

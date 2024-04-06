@@ -23,6 +23,13 @@ linter:
   rules:
     # avoid_print: false  # Uncomment to disable the `avoid_print` rule
     # prefer_single_quotes: true  # Uncomment to enable the `prefer_single_quotes` rule
-
+    - prefer_relative_imports #https://dart-lang.github.io/linter/lints/prefer_relative_imports.html
+    - prefer_final_locals #https://dart-lang.github.io/linter/lints/prefer_final_locals.html
+    - no_logic_in_create_state #https://dart-lang.github.io/linter/lints/no_logic_in_create_state.html
+    - avoid_returning_null_for_future #https://dart-lang.github.io/linter/lints/avoid_returning_null_for_future.html
+    - avoid_empty_else #https://dart-lang.github.io/linter/lints/avoid_empty_else.html
+    - prefer_single_quotes #https://dart-lang.github.io/linter/lints/prefer_single_quotes.html
+    - avoid_void_async #https://dart-lang.github.io/linter/lints/avoid_void_async.html
+    - use_named_constants #https://dart-lang.github.io/linter/lints/use_named_constants.html
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options
