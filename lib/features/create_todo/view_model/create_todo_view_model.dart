@@ -45,14 +45,6 @@ class CreateTodoViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  bool isButtonEnable() {
-    final isTitleFilled = (title ?? '').isNotEmpty;
-    final isDescriptionFilled = (title ?? '').isNotEmpty;
-    final isDateFilled = (title ?? '').isNotEmpty;
-
-    return isTitleFilled && isDescriptionFilled && isDateFilled;
-  }
-
   Future<Task?> createTask() async {
     showLoading();
 

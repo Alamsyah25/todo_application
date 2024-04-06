@@ -160,7 +160,7 @@ void main() {
       verify(() => repository.updateStatus(any(), any())).called(1);
     });
 
-    test('test update status', () async {
+    test('test delete task', () async {
       /// init view model
       final viewModel = HomeViewModel(homeRepository: repository);
 
