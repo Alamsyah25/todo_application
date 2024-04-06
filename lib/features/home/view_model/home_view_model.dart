@@ -24,7 +24,7 @@ class HomeViewModel extends BaseViewModel {
 
   List<Status> get statusList => _statusList;
 
-  int _todoLength = 1;
+  int _todoLength = 0;
   int _ongoingLength = 0;
   int _doneLength = 0;
 
@@ -62,7 +62,7 @@ class HomeViewModel extends BaseViewModel {
 
   Future<void> taskOverview() async {
     _todoLength = taskList
-        .map((element) => element.status?.status == Constants.todo)
+        .where((element) => element.status?.status == Constants.todo)
         .length;
     _ongoingLength = taskList
         .where((element) => element.status?.status == Constants.onGoing)

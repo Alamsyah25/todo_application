@@ -22,7 +22,7 @@ class HomeView extends StatelessWidget {
           onPressed: () {
             Navigator.pushNamed(context, RouteList.createTodo).whenComplete(() {
               context.read<HomeViewModel>().fetchTask();
-              context.read<HomeViewModel>().fetchStatus();
+              context.read<HomeViewModel>().taskOverview();
             });
           },
           icon: const Icon(
